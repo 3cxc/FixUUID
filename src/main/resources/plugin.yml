@@ -1,0 +1,44 @@
+name: NoUUIDWhiteList
+version: '${project.version}'
+main: com.nouuidwhitelist.NoUUIDWhiteList
+api-version: 1.13
+authors: [ 3cxc ]
+description: 去掉了UUID验证的轻量级白名单插件
+website: https://github.com/3cxc/NoUUIDWhiteList
+commands:
+  whitelist:
+    description: 白名单指令
+
+permissions:
+  whitelist.admin:
+    description: 本插件的管理员权限
+    default: op
+    children:
+      whitelist.help: true
+      whitelist.add: true
+      whitelist.remove: true
+      whitelist.on: true
+      whitelist.off: true
+      whitelist.list: true
+      whitelist.reload: true
+  whitelist.help:
+    description: 获取子命令TAB列表的权限(就是能否使用TAB补全)
+    default: op
+  whitelist.add:
+    description: 向白名单里添加玩家
+    default: op
+  whitelist.remove:
+    description: 从白名单里删除一个玩家
+    default: op
+  whitelist.on:
+    description: 开启白名单
+    default: op
+  whitelist.off:
+    description: 关闭白名单
+    default: op
+  whitelist.reload:
+    description: 重载白名单
+    default: op
+  whitelist.list:
+    description: 查看在白名单内的所有玩家
+    default: op
