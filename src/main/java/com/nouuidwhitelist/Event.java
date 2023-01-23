@@ -8,7 +8,7 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import static com.nouuidwhitelist.NoUUIDWhiteList.Whitelist;
 import static com.nouuidwhitelist.NoUUIDWhiteList.config;
 
-public class Event extends Thread implements Listener {//处理玩家登录数据
+public class Event implements Listener {//处理玩家登录数据
 
     @EventHandler
     public void PlayerLoginEvent(AsyncPlayerPreLoginEvent Aevent){
@@ -24,6 +24,4 @@ public class Event extends Thread implements Listener {//处理玩家登录数�
             }
         }
     }
-
-
 }
