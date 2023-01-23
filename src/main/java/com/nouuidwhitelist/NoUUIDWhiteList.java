@@ -2,9 +2,12 @@ package com.nouuidwhitelist;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class NoUUIDWhiteList extends JavaPlugin {
@@ -22,6 +25,17 @@ public final class NoUUIDWhiteList extends JavaPlugin {
         Whitelist = config.getConfig().getStringList("Whitelist");
         CommandRegister();//注册命令
         getServer().getPluginManager().registerEvents(new Event(),this);//注册Event
+        new BukkitRunnable(){
+            @Override
+            public void run() {//异步执行，每50tick执行一次，每次执行检查一次在线玩家是否都有白名单
+                ArrayList<Player> list = new ArrayList<>(getServer().getOnlinePlayers());
+                for (int i = 0 ; i < list.size() ; i++){
+                    if (!Whitelist.contains(list.get(i).getName())){
+                        list.get(i).kickPlayer(ChatColor.RED+"你没有白名单！");
+                    }
+                }
+            }
+        }.runTaskTimerAsynchronously(this,70,50);
     }
 
     public void CommandRegister(){//命令注册
