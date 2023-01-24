@@ -6,13 +6,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.nouuidwhitelist.NoUUIDWhiteList.Whitelist;
-import static com.nouuidwhitelist.NoUUIDWhiteList.config;
+import static com.nouuidwhitelist.NoUUIDWhiteList.*;
 
 public class Commands implements CommandExecutor, TabExecutor{
     @Override
@@ -38,6 +39,9 @@ public class Commands implements CommandExecutor, TabExecutor{
                             config.getConfig().set("Whitelist",Whitelist);
                             config.saveConfig();
                             config.reloadConfig();
+                            File messgae = new File(NoUUIDWhiteList.getPlugin(NoUUIDWhiteList.class).getDataFolder(),"message"+".yml");
+                            MessageConfig = YamlConfiguration.loadConfiguration(messgae);//读取语言文件
+                            KickMessage = MessageConfig.getString("Kick_Message");
                             player.sendMessage(ChatColor.WHITE+"已重新读取白名单");
                         }else {
                             player.sendMessage(ChatColor.RED+"您没有权限执行此命令！");
@@ -46,6 +50,9 @@ public class Commands implements CommandExecutor, TabExecutor{
                         config.getConfig().set("Whitelist",Whitelist);
                         config.saveConfig();
                         config.reloadConfig();
+                        File messgae = new File(NoUUIDWhiteList.getPlugin(NoUUIDWhiteList.class).getDataFolder(),"message"+".yml");
+                        MessageConfig = YamlConfiguration.loadConfiguration(messgae);//读取语言文件
+                        KickMessage = MessageConfig.getString("Kick_Message");
                         System.out.println(ChatColor.WHITE+"已重新读取白名单");
                     }
                 }
@@ -219,7 +226,9 @@ public class Commands implements CommandExecutor, TabExecutor{
                         ArrayList<Player> OnlinePlayerList = new ArrayList<>(Bukkit.getOnlinePlayers());
                         List<String> list = new ArrayList<>();
                         for (int i = 0 ; i < OnlinePlayerList.size() ; i++){
-                            list.add(OnlinePlayerList.get(i).getName());
+                            if (!Whitelist.contains(OnlinePlayerList.get(i).getName())){//没有白名单且在线的玩家才会加入到TAB补全列表(原版如此)
+                                list.add(OnlinePlayerList.get(i).getName());
+                            }
                         }
                         return list;//返回在线玩家列表(原版如此)
                     }else if (args[0].equalsIgnoreCase("remove")){
@@ -231,7 +240,9 @@ public class Commands implements CommandExecutor, TabExecutor{
                     ArrayList<Player> OnlinePlayerList = new ArrayList<>(Bukkit.getOnlinePlayers());
                     List<String> list = new ArrayList<>();
                     for (int i = 0 ; i < OnlinePlayerList.size() ; i++){
-                        list.add(OnlinePlayerList.get(i).getName());
+                        if (!Whitelist.contains(OnlinePlayerList.get(i).getName())){//没有白名单且在线的玩家才会加入到TAB补全列表(原版如此)
+                            list.add(OnlinePlayerList.get(i).getName());
+                        }
                     }
                     return list;//返回在线玩家列表(原版如此)
                 }else if (args[0].equalsIgnoreCase("remove")){

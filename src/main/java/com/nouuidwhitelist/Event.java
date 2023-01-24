@@ -5,8 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 
-import static com.nouuidwhitelist.NoUUIDWhiteList.Whitelist;
-import static com.nouuidwhitelist.NoUUIDWhiteList.config;
+import static com.nouuidwhitelist.NoUUIDWhiteList.*;
 
 public class Event implements Listener {//处理玩家登录数据
 
@@ -20,7 +19,7 @@ public class Event implements Listener {//处理玩家登录数据
         }
         if (!bl){//检查是否在白名单内
             if (config.getConfig().getBoolean("Enable",true)){//如果不在白名单内且白名单已开启
-                Aevent.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST,ChatColor.RED+"你没有白名单！");
+                Aevent.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST,KickMessage);
             }
         }
     }
