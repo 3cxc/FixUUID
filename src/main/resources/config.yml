@@ -1,4 +1,6 @@
 #是否启用本插件
 Enable: true
+#启用此功能后，在线的没有白名单的玩家会被踢出
+KickOnlinePlayer: true
 #白名单
 Whitelist: []
