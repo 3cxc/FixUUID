@@ -1,4 +1,4 @@
-# NoUUIDWhitelist
+# FixUUID
 没有UUID验证的白名单插件
 
 本插件代码基于 MIT 协议在Github上开源
