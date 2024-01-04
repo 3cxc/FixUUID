@@ -2,7 +2,7 @@
 name: 插件BUG反馈
 about: 后台因本插件报错/配置文件报错/插件没有正常运行
 title: ''
-labels: bug
+labels: Bug, 新反馈
 assignees: ''
 
 ---
