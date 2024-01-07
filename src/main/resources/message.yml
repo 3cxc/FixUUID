@@ -1,1 +1,4 @@
-Kick_Message: '§c你没有白名单！'
+#没有白名单时的踢出信息
+#支持多行，颜色请使用§
+WhiteList_Kick_Message:
+  - '§c你没有白名单！'
