@@ -1,5 +1,5 @@
 # FixUUID
-没有UUID验证的白名单插件
+一个轻量级插件，包含对原版白名单和OP的UUID修复
 
 本插件代码基于 MIT 协议在Github上开源
 
