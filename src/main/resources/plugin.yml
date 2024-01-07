@@ -5,7 +5,7 @@ api-version: '1.13'
 authors: [ 3cxc ]
 description: UUID修复，以防止未进入过服务器的玩家与服务器UUID的不一致
 website: https://github.com/3cxc/FixUUID
-depend: [ProtocolLib,ToolsLib]
+depend: [ProtocolLib]
 commands:
   whitelist:
     description: 白名单指令
