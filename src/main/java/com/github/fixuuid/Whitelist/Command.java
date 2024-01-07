@@ -24,20 +24,20 @@ public class Command implements CommandExecutor, TabExecutor {
             }
 
             if (args.length == 1){
-                if (args[0].equalsIgnoreCase("reload")){//reload指令
+                if (args[0].equalsIgnoreCase("reload")){//重载白名单
                     if (checkPlayerPermission(sender,"fixuuid.whitelist.reload",ChatColor.RED+"您没有权限执行此命令！"))return false;
                     //重载配置文件
                     plugin.reloadConfig();
                     new ConfigManager().loadConfig();
                     sender.sendMessage(ChatColor.WHITE+"已重新读取配置文件！");
                 }
-                if (args[0].equalsIgnoreCase("list")){
+                if (args[0].equalsIgnoreCase("list")){//白名单玩家列表
                     if (checkPlayerPermission(sender,"fixuuid.whitelist.list",ChatColor.RED+"您没有权限执行此命令！"))return false;
                     if (Player_Whitelist.isEmpty()){
                         sender.sendMessage(ChatColor.WHITE+"白名单内没有玩家");
-                    }else {
-                        sender.sendMessage(ChatColor.WHITE+"白名单内共有"+Player_Whitelist.size()+"名玩家: "+Player_Whitelist);
+                        return false;
                     }
+                    sender.sendMessage(ChatColor.WHITE+"白名单内共有"+Player_Whitelist.size()+"名玩家: "+Player_Whitelist);
                 }
                 if (args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("remove")){
                     sender.sendMessage(ChatColor.RED+"请指定一个有效的玩家名！");
@@ -45,23 +45,23 @@ public class Command implements CommandExecutor, TabExecutor {
             }
 
             if (args.length == 2){
-                if (args[0].equalsIgnoreCase("add")){
+                if (args[0].equalsIgnoreCase("add")){//添加一个玩家到白名单
                     if (checkPlayerPermission(sender,"fixuuid.whitelist.add",ChatColor.RED+"您没有权限执行此命令！"))return false;
                     if (Player_Whitelist.contains(args[1])){
                         sender.sendMessage(ChatColor.RED+"此玩家已在白名单内");
                     }else {
                         Player_Whitelist.add(args[1]);
-                        setConfig("Whitelist.list",Player_Whitelist);
+                        ConfigManager.saveConfig("Whitelist.list",Player_Whitelist);
                         sender.sendMessage(ChatColor.WHITE+"已添加玩家"+args[1]+"到白名单内");
                     }
                 }
-                if (args[0].equalsIgnoreCase("remove")){
+                if (args[0].equalsIgnoreCase("remove")){//删除一个玩家的白名单
                     if (checkPlayerPermission(sender,"fixuuid.whitelist.remove",ChatColor.RED+"您没有权限执行此命令！"))return false;
                     if (!Player_Whitelist.contains(args[1])){
                         sender.sendMessage(ChatColor.RED+"此玩家不在白名单内");
                     }else {
                         Player_Whitelist.remove(args[1]);
-                        setConfig("Whitelist.list",Player_Whitelist);
+                        ConfigManager.saveConfig("Whitelist.list",Player_Whitelist);
                         sender.sendMessage(ChatColor.WHITE+"已从白名单内删除玩家"+args[1]);
                     }
                 }
@@ -127,15 +127,5 @@ public class Command implements CommandExecutor, TabExecutor {
             }
         }
         return false;
-    }
-
-    /**
-     * 更改并保存一个配置文件项
-     * @param path 配置文件项
-     * @param del 新值
-     */
-    private static void setConfig(String path,List<String> del){
-        plugin.getConfig().set(path,del);
-        plugin.saveConfig();
     }
 }
