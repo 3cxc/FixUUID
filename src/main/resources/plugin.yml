@@ -17,8 +17,6 @@ permissions:
     children:
       fixuuid.whitelist.add: true
       fixuuid.whitelist.remove: true
-      fixuuid.whitelist.on: true
-      fixuuid.whitelist.off: true
       fixuuid.whitelist.list: true
       fixuuid.whitelist.reload: true
   fixuuid.whitelist.add:
@@ -26,12 +24,6 @@ permissions:
     default: op
   fixuuid.whitelist.remove:
     description: 从白名单里删除一个玩家
-    default: op
-  fixuuid.whitelist.on:
-    description: 开启白名单
-    default: op
-  fixuuid.whitelist.off:
-    description: 关闭白名单
     default: op
   fixuuid.whitelist.reload:
     description: 重载白名单
