@@ -11,8 +11,7 @@ import com.github.toolslib.network.HttpClient;
 
 import java.util.ArrayList;
 
-import static com.github.fixuuid.ConfigManager.KickMessage;
-import static com.github.fixuuid.ConfigManager.Player_Whitelist;
+import static com.github.fixuuid.ConfigManager.*;
 
 final public class FixUUID extends JavaPlugin{
     public static JavaPlugin plugin;
@@ -21,7 +20,7 @@ final public class FixUUID extends JavaPlugin{
 
     @Override
     public void onLoad(){
-        //尝试生成主配置文件和语言文件
+        //尝试生成主配置文件和语言文件，如果已经存在则直接加载
         getConfig().options().copyDefaults();
         saveDefaultConfig();
         saveResource("message.yml", false);
@@ -58,8 +57,7 @@ final public class FixUUID extends JavaPlugin{
 
     @Override
     public void onDisable(){
-        getConfig().set("Whitelist",Player_Whitelist);
-        saveConfig();
+        ConfigManager.saveConfig("Whitelist",Player_Whitelist);
         getLogger().info("插件数据已保存,插件已关闭");
     }
 }
