@@ -3,7 +3,7 @@ version: '${project.version}'
 main: com.github.fixuuid.FixUUID
 api-version: '1.13'
 authors: [ 3cxc ]
-description: UUID修复，以防止未进入过服务器的玩家与服务器UUID的不一致
+description: UUID修复，以防止未进入过服务器的玩家的UUID不一致
 website: https://github.com/3cxc/FixUUID
 depend: [ProtocolLib]
 commands:
@@ -11,14 +11,22 @@ commands:
     description: 白名单指令
 
 permissions:
-  fixuuid.whitelist.admin:
+  fixuuid.admin:
     description: 本插件的管理员权限
     default: op
     children:
+      fixuuid.whitelist.off: true
+      fixuuid.whitelist.on: true
       fixuuid.whitelist.add: true
       fixuuid.whitelist.remove: true
       fixuuid.whitelist.list: true
       fixuuid.whitelist.reload: true
+  fixuuid.whitelist.on:
+    description: 开启白名单
+    default: op
+  fixuuid.whitelist.off:
+    description: 关闭白名单
+    default: op
   fixuuid.whitelist.add:
     description: 向白名单里添加玩家
     default: op

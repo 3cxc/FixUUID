@@ -7,8 +7,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import com.github.toolslib.network.HttpClient;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import static com.github.fixuuid.ConfigManager.*;
@@ -16,14 +16,24 @@ import static com.github.fixuuid.ConfigManager.*;
 final public class FixUUID extends JavaPlugin{
     public static JavaPlugin plugin;
 
+    //ProtocolLib API访问
     public static ProtocolManager pm;
+
+    //无权限提示
+    public static String NoPermissionMessage = ChatColor.RED+"您没有权限执行此命令";
 
     @Override
     public void onLoad(){
         //尝试生成主配置文件和语言文件，如果已经存在则直接加载
-        getConfig().options().copyDefaults();
-        saveDefaultConfig();
-        saveResource("message.yml", false);
+        plugin = FixUUID.getPlugin(FixUUID.class);
+        if (!new File(plugin.getDataFolder(), "config.yml").exists()){
+            getConfig().options().copyDefaults();
+            saveDefaultConfig();
+        }
+        if (!new File(plugin.getDataFolder(), "message.yml").exists()){
+            saveResource("message.yml", false);
+        }
+        //加载配置文件
         new ConfigManager().loadConfig();
     }
 
@@ -31,7 +41,6 @@ final public class FixUUID extends JavaPlugin{
     @Override
     public void onEnable() {
         getLogger().info(ChatColor.GREEN + "插件已加载,作者:3cxc");
-        plugin = FixUUID.getPlugin(FixUUID.class);
         //尝试获取ProtocolLib的API
         pm = ProtocolLibrary.getProtocolManager();
         //注册命令
@@ -46,7 +55,7 @@ final public class FixUUID extends JavaPlugin{
                 ArrayList<Player> list = new ArrayList<>(getServer().getOnlinePlayers());
                 for (Player player : list) {
                     if (!Player_Whitelist.contains(player.getName())) {
-                        if (plugin.getConfig().getBoolean("KickOnlinePlayer", true)) {//只有时才踢出
+                        if (proxy_mode) {
                             player.kickPlayer(KickMessage);
                         }
                     }
@@ -57,7 +66,7 @@ final public class FixUUID extends JavaPlugin{
 
     @Override
     public void onDisable(){
-        ConfigManager.saveConfig("Whitelist",Player_Whitelist);
-        getLogger().info("插件数据已保存,插件已关闭");
+        saveConfig();
+        getLogger().info(ChatColor.GREEN+"插件数据已保存,插件已关闭");
     }
 }

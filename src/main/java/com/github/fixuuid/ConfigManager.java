@@ -10,17 +10,20 @@ import static com.github.fixuuid.FixUUID.plugin;
 
 public class ConfigManager {
 
-    public static List<String> Player_Whitelist;
+    public static volatile List<String> Player_Whitelist;
 
     public static String KickMessage;
+
+    public static volatile boolean proxy_mode;
 
     /**
      * 加载配置文件
      */
     public void loadConfig(){
         Player_Whitelist = plugin.getConfig().getStringList("Whitelist.list");
+        proxy_mode = plugin.getConfig().getBoolean("Whitelist.KickOnlinePlayer",false);
         //读取语言文件
-        File file = new File(plugin.getDataFolder(), "message" + ".yml");
+        File file = new File(plugin.getDataFolder(), "message.yml");
         FileConfiguration messageConfig = YamlConfiguration.loadConfiguration(file);
         KickMessage = messageConfig.getString("Kick_Message");
     }
